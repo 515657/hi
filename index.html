@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BharatVerse | Monument Scanner</title>
+
+<style>
+.quiz-button {
+    text-decoration: none;
+    background: #c46119;
+    color: white;
+    padding: 11px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.quiz-button:hover {
+    background: #8e3f0c;
+}
+.quiz-button {
+    display: inline-block;
+    padding: 12px 22px;
+    background: #c46119;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.quiz-button:hover {
+    background: #8e3f0c;
+    transform: translateY(-2px);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #fff8ed, #f5e5c8);
+    color: #3b2415;
+}
+
+/* NAVBAR */
+
+.navbar {
+    width: 100%;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #9b4d13;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #4b2b18;
+    margin-left: 25px;
+    font-weight: bold;
+}
+
+/* HERO */
+
+.hero {
+    text-align: center;
+    padding: 70px 20px 45px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    color: #71340e;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    max-width: 750px;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* MONUMENT SELECTOR */
+
+.selector-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto 50px;
+}
+
+.selector-section h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.monument-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+}
+
+.monument-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    border: 3px solid transparent;
+}
+
+.monument-card:hover {
+    transform: translateY(-7px);
+    border-color: #c66b22;
+}
+
+.monument-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+}
+
+.monument-card h3 {
+    padding: 13px;
+    text-align: center;
+    font-size: 17px;
+}
+
+/* SCANNER */
+
+.scanner-section {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+    align-items: center;
+}
+
+.scanner-box {
+    background: #1d1d1d;
+    border-radius: 25px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.scanner-image {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 18px;
+    opacity: 0.85;
+}
+
+/* SCANNING LINE */
+
+.scan-line {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    height: 4px;
+    background: #00ff9d;
+    box-shadow: 0 0 15px #00ff9d, 0 0 30px #00ff9d;
+    top: 20px;
+    display: none;
+    z-index: 5;
+}
+
+.scanning .scan-line {
+    display: block;
+    animation: scan 2.5s linear infinite;
+}
+
+@keyframes scan {
+
+    0% {
+        top: 20px;
+    }
+
+    50% {
+        top: 350px;
+    }
+
+    100% {
+        top: 20px;
+    }
+
+}
+
+.scanning .scanner-image {
+    filter: brightness(0.65);
+}
+
+/* SCANNER CORNERS */
+
+.corner {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border-color: #00ff9d;
+    z-index: 6;
+}
+
+.top-left {
+    top: 35px;
+    left: 35px;
+    border-top: 3px solid;
+    border-left: 3px solid;
+}
+
+.top-right {
+    top: 35px;
+    right: 35px;
+    border-top: 3px solid;
+    border-right: 3px solid;
+}
+
+.bottom-left {
+    bottom: 35px;
+    left: 35px;
+    border-bottom: 3px solid;
+    border-left: 3px solid;
+}
+
+.bottom-right {
+    bottom: 35px;
+    right: 35px;
+    border-bottom: 3px solid;
+    border-right: 3px solid;
+}
+
+/* BUTTON */
+
+.scan-button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 30px;
+    background: #c46119;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.scan-button:hover {
+    background: #8e3f0c;
+    transform: scale(1.05);
+}
+
+/* INFO */
+
+.info-box {
+    background: rgba(255,255,255,0.92);
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.info-box h2 {
+    color: #873b0c;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.info-box h4 {
+    color: #a75b23;
+    margin-bottom: 20px;
+}
+
+.info-box p {
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.fact {
+    background: #fff4df;
+    padding: 13px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+/* EXPLORE */
+
+.explore {
+    margin-top: 25px;
+}
+
+.explore h3 {
+    margin-bottom: 15px;
+}
+
+.explore-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.explore-buttons a {
+    text-decoration: none;
+    background: #71340e;
+    color: white;
+    padding: 11px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.explore-buttons a:hover {
+    background: #c46119;
+}
+
+/* VIRTUAL TOUR BUTTON */
+
+#tour {
+    background: #2864c7;
+}
+
+#tour:hover {
+    background: #17458f;
+}
+
+/* STATUS */
+
+.status {
+    text-align: center;
+    margin-top: 15px;
+    color: #00b875;
+    font-weight: bold;
+    min-height: 20px;
+}
+
+/* FOOTER */
+
+footer {
+    margin-top: 80px;
+    padding: 30px;
+    background: #3a2114;
+    color: white;
+    text-align: center;
+}
+
+footer span {
+    color: #f0a25b;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 800px) {
+
+    .scanner-section {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navbar a {
+        margin-left: 10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- NAVIGATION -->
+
+<nav class="navbar">
+
+    <div class="logo">
+         BharatVerse
+    </div>
+
+    <div>
+
+        <a href="#monuments">
+            Monuments
+        </a>
+
+        <a href="#scanner">
+            Scanner
+        </a>
+
+        <a href="#information">
+            Explore
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>
+        Monument Scanner
+    </h1>
+
+    <p>
+
+        Discover India's incredible heritage.
+        Select a monument, scan it, and explore
+        its history, architecture and digital
+        experiences.
+
+    </p>
+
+</section>
+
+
+<!-- MONUMENT SELECTION -->
+
+<section class="selector-section" id="monuments">
+
+    <h2>
+        Choose a Monument
+    </h2>
+
+    <div class="monument-list">
+
+
+        <div class="monument-card"
+             onclick="selectMonument('taj')">
+
+            <img
+                src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80"
+                alt="Taj Mahal">
+
+            <h3>
+                Taj Mahal
+            </h3>
+
+        </div>
+
+
+        <div class="monument-card"
+             onclick="selectMonument('redfort')">
+
+            <img
+                src="https://images.unsplash.com/photo-1592639296346-560c37a0f711?auto=format&fit=crop&w=600&q=80"
+                alt="Red Fort">
+
+            <h3>
+                Red Fort
+            </h3>
+
+        </div>
+
+
+        <div class="monument-card"
+             onclick="selectMonument('qutub')">
+
+            <img
+                src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=600&q=80"
+                alt="Qutub Minar">
+
+            <h3>
+                Qutub Minar
+            </h3>
+
+        </div>
+
+
+        <div class="monument-card"
+             onclick="selectMonument('hawa')">
+
+            <img
+                src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80"
+                alt="Hawa Mahal">
+
+            <h3>
+                Hawa Mahal
+            </h3>
+
+        </div>
+
+
+        <div class="monument-card"
+             onclick="selectMonument('gateway')">
+
+            <img
+                src="https://images.unsplash.com/photo-1595658658481-d53d3f999875?auto=format&fit=crop&w=600&q=80"
+                alt="Gateway of India">
+
+            <h3>
+                Gateway of India
+            </h3>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- SCANNER + INFORMATION -->
+
+<section class="scanner-section" id="scanner">
+
+
+    <!-- SCANNER -->
+
+    <div>
+
+        <div class="scanner-box" id="scannerBox">
+
+            <img
+                id="scannerImage"
+                class="scanner-image"
+                src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80"
+                alt="Selected Monument">
+
+            <div class="scan-line"></div>
+
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+
+        </div>
+
+
+        <button
+            class="scan-button"
+            onclick="scanMonument()">
+
+            📷 Scan Monument
+
+        </button>
+
+
+        <div
+            class="status"
+            id="status">
+        </div>
+
+    </div>
+
+
+    <!-- INFORMATION -->
+
+    <div
+        class="info-box"
+        id="information">
+
+        <h2 id="monumentName">
+            Taj Mahal
+        </h2>
+
+        <h4 id="location">
+            📍 Agra, Uttar Pradesh
+        </h4>
+
+        <p id="description">
+
+            The Taj Mahal is one of India's most
+            famous monuments. Built by Mughal
+            emperor Shah Jahan, it is known for
+            its beautiful white marble architecture
+            and detailed design.
+
+        </p>
+
+
+        <div class="facts">
+
+
+            <div class="fact">
+
+                🏛️ <b>Type:</b>
+
+                <span id="type">
+                    Mausoleum
+                </span>
+
+            </div>
+
+
+            <div class="fact">
+
+                📅 <b>Period:</b>
+
+                <span id="period">
+                    1632–1653
+                </span>
+
+            </div>
+
+
+            <div class="fact">
+
+                🧱 <b>Material:</b>
+
+                <span id="material">
+                    White Marble
+                </span>
+
+            </div>
+
+
+            <div class="fact">
+
+                🌍 <b>Heritage:</b>
+
+                <span id="heritage">
+                    UNESCO World Heritage Site
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- EXPLORE DIGITALLY -->
+
+        <div class="explore">
+
+            <h3>
+                Explore Digitally
+            </h3>
+
+            <div class="explore-buttons">
+
+             <a href=" https://515657.github.io/Hackathon/" class="quiz-button">
+              🏛️ Monument & History Quiz
+             </a>
+                <a
+                    id="official"
+                    href="https://www.tajmahal.gov.in/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    🌐 Official Website
+
+                </a>
+
+
+                <a
+                    id="tour"
+                    href="https://earth.google.com/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    🥽 Virtual Tour
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+
+        © 2026
+        <span>
+            BharatVerse
+        </span>
+        —
+        Discover. Learn. Experience India's Heritage.
+
+    </p>
+
+</footer>
+
+
+<script>
+
+
+/* =========================================
+   MONUMENT DATABASE
+   ========================================= */
+
+const monuments = {
+
+
+    /* =========================
+       TAJ MAHAL
+       ========================= */
+
+    taj: {
+
+        name:
+            "Taj Mahal",
+
+        location:
+            "📍 Agra, Uttar Pradesh",
+
+        image:
+            "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80",
+
+        description:
+            "The Taj Mahal is a magnificent white marble mausoleum built by Mughal emperor Shah Jahan in memory of Mumtaz Mahal. It is famous for its symmetrical design, marble work and beautiful gardens.",
+
+        type:
+            "Mausoleum",
+
+        period:
+            "1632–1653",
+
+        material:
+            "White Marble",
+
+        heritage:
+            "UNESCO World Heritage Site",
+
+        official:
+            "https://www.tajmahal.gov.in/",
+
+        /* TAJ MAHAL GOOGLE EARTH */
+
+        tour:
+            "https://earth.google.com/web/search/Taj+Mahal/@27.1739324,78.0422423,165.63116996a,0d,60y,357.25590938h,97.07639826t,0r/data=CiwiJgokCaB5dQcSqTxAEXnwvE7IpjxAGaXhmf91T1NAIcnGnfYTT1NAQgIIASIaChZjeERWOFNFMHFSVkREaEdWcWJUWlBREAJCAggASg0I____________ARAA"
+
+    },
+
+
+    /* =========================
+       RED FORT
+       ========================= */
+
+    redfort: {
+
+        name:
+            "Red Fort",
+
+        location:
+            "📍 Delhi, India",
+
+        image:
+            "https://images.unsplash.com/photo-1592639296346-560c37a0f711?auto=format&fit=crop&w=900&q=80",
+
+        description:
+            "The Red Fort is a historic fort complex in Delhi. It was commissioned by Shah Jahan and became an important centre of Mughal power.",
+
+        type:
+            "Fort",
+
+        period:
+            "1638–1648",
+
+        material:
+            "Red Sandstone",
+
+        heritage:
+            "UNESCO World Heritage Site",
+
+        official:
+            "https://culture.gov.in/red-fort-complex",
+
+        /* RED FORT GOOGLE EARTH */
+
+        tour:
+            "https://earth.google.com/web/search/Red+fort/@28.65596266,77.23858515,217.03317261a,0d,60y,277.2785725h,95.1879589t,0r/data=CjsaDQoJL20vMDVteXN2GAEiJgokCYevnV28pjxAEbiaH_eHpDxAGb_0n-c3S1NAIYoteraISlNAQgIIASIaChYtWURYSG9fWDRVSV9kNklhTUtaX3R3EAJCAggASg0I____________ARAA"
+
+    },
+
+
+    /* =========================
+       QUTUB MINAR
+       ========================= */
+
+    qutub: {
+
+        name:
+            "Qutub Minar",
+
+        location:
+            "📍 Delhi, India",
+
+        image:
+            "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=900&q=80",
+
+        description:
+            "Qutub Minar is a famous medieval monument in Delhi. Its tall tower is decorated with intricate carvings and inscriptions.",
+
+        type:
+            "Minaret",
+
+        period:
+            "12th–13th Century",
+
+        material:
+            "Red Sandstone & Marble",
+
+        heritage:
+            "UNESCO World Heritage Site",
+
+        official:
+            "https://whc.unesco.org/en/list/233/",
+
+        /* QUTUB MINAR GOOGLE EARTH */
+
+        tour:
+            "https://earth.google.com/web/search/Qutub+Minar/@28.52440053,77.18592282,257.51884652a,0d,60y,274.20869613h,125.58960856t,0r/data=CiwiJgokCdkaybCCykFAEUZtpD2LxA_AGaQTmpfRVlhAIV6w7rf8jz7AQgIIASIaChZtYnluM0Nvc3Mzcm5TWEJnZ3Z1WnRREAJCAggASg0I____________ARAA"
+
+    },
+
+
+    /* =========================
+       HAWA MAHAL
+       ========================= */
+
+    hawa: {
+
+        name:
+            "Hawa Mahal",
+
+        location:
+            "📍 Jaipur, Rajasthan",
+
+        image:
+            "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80",
+
+        description:
+            "Hawa Mahal is one of Jaipur's most recognisable landmarks. Its distinctive façade contains hundreds of small windows designed to allow air to flow through the building.",
+
+        type:
+            "Palace",
+
+        period:
+            "1799",
+
+        material:
+            "Pink Sandstone",
+
+        heritage:
+            "Historic Landmark",
+
+        official:
+            "https://www.tourism.rajasthan.gov.in/",
+
+        /* HAWA MAHAL GOOGLE EARTH */
+
+        tour:
+            "https://earth.google.com/web/search/Hawa+Mahal/@26.92399212,75.82714887,475.81847878a,0d,60y,245.67731992h,115.53311771t,0r/data=CjsaDQoJL20vMDZrN3FjGAEiJgokCXTVwKdqhzxAEfkHe5EThTxAGZErXBUVTFNAITkfRj23S1NAQgIIASIaChZ1OE5lYURLb3BZM0dFdHdnWU4xLWVnEAJCAggASg0I____________ARAA"
+
+    },
+
+
+    /* =========================
+       GATEWAY OF INDIA
+       ========================= */
+
+    gateway: {
+
+        name:
+            "Gateway of India",
+
+        location:
+            "📍 Mumbai, Maharashtra",
+
+        image:
+            "https://images.unsplash.com/photo-1595658658481-d53d3f999875?auto=format&fit=crop&w=900&q=80",
+
+        description:
+            "The Gateway of India is a famous monument overlooking Mumbai Harbour. Its architecture combines Indo-Saracenic influences with other architectural elements.",
+
+        type:
+            "Arch Monument",
+
+        period:
+            "1911–1924",
+
+        material:
+            "Basalt",
+
+        heritage:
+            "Historic Landmark",
+
+        official:
+            "https://www.incredibleindia.gov.in/",
+
+        /* GATEWAY OF INDIA GOOGLE EARTH */
+
+        tour:
+            "https://earth.google.com/web/search/Gateway+Of+India,+Apollo+Bandar,+Colaba,+Mumbai,+Maharashtra/@18.92232679,72.83455894,8.58127482a,0d,60y,183.3709339h,107.85244414t,0r/data=CjsaDQoJL20vMDJoN3IyGAEiJgokCQSBgV0i7jpAEZTQFiHz6jpAGYztZ5NI9VJAIT0np26X9FJAQgIIASIaChZ6MVU0aS1WUkhuTjZzTFlicGtNMjlREAJCAggASg0I____________ARAA"
+
+    }
+
+};
+
+
+/* =========================================
+   SELECT MONUMENT
+   ========================================= */
+
+let selectedMonument = "taj";
+
+
+function selectMonument(id) {
+
+    selectedMonument = id;
+
+    const monument = monuments[id];
+
+
+    /* UPDATE NAME */
+
+    document.getElementById("monumentName").innerText =
+        monument.name;
+
+
+    /* UPDATE LOCATION */
+
+    document.getElementById("location").innerText =
+        monument.location;
+
+
+    /* UPDATE DESCRIPTION */
+
+    document.getElementById("description").innerText =
+        monument.description;
+
+
+    /* UPDATE FACTS */
+
+    document.getElementById("type").innerText =
+        monument.type;
+
+    document.getElementById("period").innerText =
+        monument.period;
+
+    document.getElementById("material").innerText =
+        monument.material;
+
+    document.getElementById("heritage").innerText =
+        monument.heritage;
+
+
+    /* UPDATE SCANNER IMAGE */
+
+    document.getElementById("scannerImage").src =
+        monument.image;
+
+
+    /* UPDATE OFFICIAL WEBSITE */
+
+    document.getElementById("official").href =
+        monument.official;
+
+
+    /* =========================================
+       UPDATE VIRTUAL TOUR
+
+       THIS IS THE IMPORTANT PART.
+       The button now gets the Google Earth
+       link belonging to the selected monument.
+       ========================================= */
+
+    document.getElementById("tour").href =
+        monument.tour;
+
+
+    /* UPDATE STATUS */
+
+    document.getElementById("status").innerText =
+        "Monument selected: " + monument.name;
+
+
+    /* SCROLL TO SCANNER */
+
+    document.getElementById("scanner").scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================
+   SCAN ANIMATION
+   ========================================= */
+
+function scanMonument() {
+
+    const scanner =
+        document.getElementById("scannerBox");
+
+    const status =
+        document.getElementById("status");
+
+
+    scanner.classList.add("scanning");
+
+
+    status.innerText =
+        "🔍 Scanning monument...";
+
+
+    setTimeout(function() {
+
+
+        scanner.classList.remove("scanning");
+
+
+        status.innerText =
+            "✓ Monument identified: " +
+            monuments[selectedMonument].name;
+
+
+        document.getElementById("information")
+            .scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "center"
+
+            });
+
+
+    }, 3500);
+
+}
+
+
+/* =========================================
+   SET INITIAL VIRTUAL TOUR LINK
+   ========================================= */
+
+document.getElementById("tour").href =
+    monuments.taj.tour;
+
+
+/* =========================================
+   END
+   ========================================= */
+
+</script>
+
+
+</body>
+</html>
+```
